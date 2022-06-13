@@ -1,9 +1,12 @@
-const express= require('express');
+const express = require('express');
+const ioServer = require('./socketIo');
+
 const { Router } = express;
 const router = Router();
 const app = express()
 
-app.use(express.static('../public'))
+
+app.use(express.static('./public'))
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -13,11 +16,13 @@ const arrayProductos = [{ "title": "pera", "price": 200, "thumbnail": "https://c
 
 router.get('/', (req, res) => {
     let hayProductos = (arrayProductos.length === 0) ? false : true;
-    res.render('productos', {arrayProductos,hayProductos, titulo: "Productos en existencia", headTitle : 'Productos' })
+    res.render('productos', { arrayProductos, hayProductos, titulo: "Productos en existencia", headTitle: 'Productos' })
+
 });
-router.get('/formulario', (req, res) => {
-    res.render('formulario', {titulo:"Cargar Productos", headTitle: 'Formulario de carga'})
-});
+
+ioServer.on('connection', (socket) => {
+    console.log('conectado');
+})
 
 router.post('/', (req, res) => {
     let id;
@@ -30,7 +35,7 @@ router.post('/', (req, res) => {
         id: id
     };
     arrayProductos.push(productoNuevo);
-    res.redirect('productos/formulario');
+    return false
 });
 
 app.use('/api/productos', router);

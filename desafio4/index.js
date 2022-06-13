@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
     let paramId = Number(req.params.id)
-    res.send(productos.getById(paramId))
+   res.send(productos.getById(paramId))
 });
 
 router.post('/', (req, res) => {

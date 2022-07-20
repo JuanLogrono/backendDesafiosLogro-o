@@ -9,6 +9,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo"; 
 import path from 'path'
 import passport from "./passport.js";
+import routes from "./routes/routes.js";
 const advanceOptions = { useNewUrlParser: true, useUnifiedTopology: true }
 
 export const app = express();
@@ -43,38 +44,20 @@ app.set("view engine", "hbs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/registro",(req,res)=>{
-    res.render('registro.hbs')
-})
-app.post('/registro',passport.authenticate('registro',{failureRedirect:'/log_in',failureMessage:true}),(req,res)=>{
-       res.redirect('/log_in')}
-)
-
-app.get('/log_in', (req, res) => {
-    res.render('log.hbs',{in:true,titulo:"log in"})
-})
-
-app.get('/log_out', (req, res) => {
-    const nombre=req.session.passport.user
-   req.session.destroy(err=>{
-    console.log((err)?err:'log out')
-   })
-    res.render("log.hbs",{nombre,in:false,titulo:"log out"})
-})
-app.post('/',passport.authenticate('auth'),(req, res) => {
-    if (req.user) {
-        res.redirect('/')
-    } else res.redirect('/log_in')
-})
+app.get("/registro", routes.getRegistro)
+app.post("/registro",passport.authenticate('registro',{failureRedirect:'/error_registro'}),routes.postRegistro)
+app.get("/error_registro",routes.getErrorRegistro)
 
 
-app.get('/', (req, res) => {
-    if (req.session.passport){
-    const nombre=req.session.passport.user
-    res.render("index.hbs",{nombre,titulo:"productos"})}
-    else
-    res.redirect('/log_in')
-})
+app.get("/login",routes.getLogin)
+app.post("/login",passport.authenticate('auth',{failureRedirect:'/error_login'}),routes.postLogin)
+app.get("/error_login", routes.getErrorLogin)
+
+
+app.get("/",routes.getProductos)
+
+app.get("/logout",routes.getLogout)
+
 ioServer.on("connection", async (socket) => {
     console.log("conectado");
     socket.emit("productos", productsData.getAll())
@@ -88,7 +71,7 @@ ioServer.on("connection", async (socket) => {
         await mensajesData.addData(newMessage);
         ioServer.sockets.emit("mensajes", await mensajesData.getAll());
     });
-});
+}); 
 
 app.use((error, req, res, next) => {
     res.status(500).send(error.message);

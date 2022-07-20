@@ -74,6 +74,6 @@ const porcentajeNorm=(dataNorm, dataDenorm)=>{
 
 
 document.getElementById('cambiarRuta').addEventListener('click',()=>{
-    window.location.assign('/log_out')
+    window.location.assign('/logout')
 })
 

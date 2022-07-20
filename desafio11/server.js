@@ -23,7 +23,8 @@ app.use(session({
     }),
     secret: 'secreto',
     resave: true,
-    saveUninitialized: true,
+    rolling:true,
+    saveUninitialized: false,
     cookie: { maxAge: 60000 }
 })) 
 
@@ -43,6 +44,8 @@ app.set("view engine", "hbs");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get("/registro", routes.getRegistro)
 app.post("/registro",passport.authenticate('registro',{failureRedirect:'/error_registro'}),routes.postRegistro)

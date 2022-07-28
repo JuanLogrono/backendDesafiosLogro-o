@@ -2,7 +2,6 @@ import { config } from 'dotenv';
 import mongoose from "mongoose";
 import normal from 'normalizr';
 import { schemaMensajes } from '../logica/normalizar.js';
-import print from '../print.js';
 
 config()
 const chatSchema = new mongoose.Schema(

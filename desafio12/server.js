@@ -30,7 +30,7 @@ app.use(session({
     resave: true,
     rolling:true,
     saveUninitialized: false,
-    cookie: { maxAge: 6000000 }
+    cookie: { maxAge: 60000 }
 })) 
 
 const httpServer = new HttpServer(app);

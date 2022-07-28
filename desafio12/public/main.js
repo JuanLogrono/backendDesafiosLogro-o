@@ -58,7 +58,7 @@ const sendMessage = () => {
     const time = new Date()
     const avatar = document.getElementById('avatar').value;
     const texto = document.getElementById('messageText').value;
-    const timestamp = `${time.getDate()}/${time.getMonth() + 1}/${time.getFullYear()}, ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`
+    const timestamp =`${time.getDate()}/${time.getMonth() + 1}/${time.getFullYear()}, ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`
     const newMessage = { 'author': { id, nombre, apellido, edad, avatar, timestamp }, texto }
     socket.emit('newMessage', newMessage);
     document.getElementById('messageText').value = '';

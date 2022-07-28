@@ -55,7 +55,6 @@ const getInfo=(req,res)=>{
 
 const randomFork=(req,res)=>{
     const num =Number(req.query.cant) || 1e8
-    console.log(typeof(num))
     const forked= fork('fork.js')
     forked.send(num)
     forked.on('message',(verNumeros)=>{

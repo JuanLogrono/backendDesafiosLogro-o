@@ -1,6 +1,4 @@
-
 import norm from "normalizr";
-
 
 const authorS= new norm.schema.Entity('author')
 
@@ -9,6 +7,5 @@ const schemaMsjs= new norm.schema.Entity('msjs',{
 },{idAttribute:'texto'})
 
 export const schemaMensajes=new norm.schema.Entity('mensajes',{
-    mensaje:[schemaMsjs]
-}) 
-
+mensaje:[schemaMsjs]
+})

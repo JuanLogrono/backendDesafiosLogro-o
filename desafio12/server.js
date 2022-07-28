@@ -30,7 +30,7 @@ app.use(session({
     resave: true,
     rolling:true,
     saveUninitialized: false,
-    cookie: { maxAge: 60000 }
+    cookie: { maxAge: 6000000 }
 })) 
 
 const httpServer = new HttpServer(app);
@@ -72,7 +72,6 @@ ioServer.on("connection", async (socket) => {
     console.log("conectado");
     socket.emit("productos", productsData.getAll())
     socket.emit("mensajes", await mensajesData.getAll());
-
     socket.on("newProduct", (newProduct) => {
         productsData.addData(newProduct);
         ioServer.sockets.emit("productos", productsData.getAll());

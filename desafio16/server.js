@@ -39,7 +39,7 @@ app.use(express.static("./public"))
 
 app.use(cookieParser())
 
-//app.use(serverRoutes_error.infoRuta)
+app.use(serverRoutes_error.infoRuta)
 
 //conexión con session store
 app.use(sessionConMongo)

@@ -6,7 +6,6 @@ export class ChatContainer {
         this.model = model
     }
     mongoConnected() {
-        console.log('si conexion')
         mongoose.connect(this.connection, {
             useNewUrlParser: true,
             useUnifiedTopology: true
@@ -17,7 +16,6 @@ export class ChatContainer {
         try {
             this.mongoConnected()
             const mensajes = await this.model.find({}, { _id: 0, __v: 0 })
-            console.log(mensajes)
             return (mensajes)
         } catch (error) {
             console.log(error)

@@ -53,15 +53,15 @@ const eliminarProducto= async ()=>{
 }
 const pruebasAxios=async()=>{
 try{
-//await obtenerProductos().then(()=>console.log("finalizado, todos los productos"));
+await obtenerProductos().then(()=>console.log("finalizado, todos los productos"));
 
 await obtenerProductosConId().then(()=>console.log("finalizado, producto por id"));
 
-//await guardarProductoNuevo().then(()=>console.log("finalizado producto guardado"));
+await guardarProductoNuevo().then(()=>console.log("finalizado producto guardado"));
 
-//await modificarProducto().then(()=>console.log("finalizado , producto modificado"));
+await modificarProducto().then(()=>console.log("finalizado , producto modificado"));
 
-//await eliminarProducto().then(()=>console.log("pedido finalizado producto eliminado"))
+await eliminarProducto().then(()=>console.log("pedido finalizado producto eliminado"))
 }catch(error){
     console.log(error)
 }

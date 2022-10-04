@@ -7,9 +7,16 @@ export class ProductosControlador {
 
     async verProductos(ctx) {
         const id = ctx.request.params.id
+        let titulo;
+        let render= 'index'
+        if (!id)  titulo='Productos disponibles' 
+        else {titulo='Producto elegido'; render= 'producto'}
         try {
-            const products = await productos.verProductos(id);
-            ctx.body=products
+            let products;
+           let prod = await productos.verProductos(id);
+           if (prod.length<2) products=prod[0]
+           else products=prod
+           await ctx.render(`${render}`,{products,titulo})
 
         } catch (error) {
             console.log(error)
@@ -18,9 +25,10 @@ export class ProductosControlador {
 
     async guardarProductos(ctx) {
         const body = ctx.request.body
+        console.log(body)
         try {
             const newProduct = await productos.guardarProductos(body)
-            ctx.body=newProduct
+          await ctx.redirect('/api/productos')
         } catch (error) {
             console.log(error)
         }
@@ -41,7 +49,7 @@ export class ProductosControlador {
         const id = ctx.request.params.id
         try {
           const productoModificado= await productos.modificarProducto(id,body)
-          ctx.body=productoModificado
+          await ctx.redirect('/')
         } catch (error) {
             console.log(error)
         }

@@ -8,15 +8,11 @@ export class ProductosControlador {
     async verProductos(ctx) {
         const id = ctx.request.params.id
         let titulo;
-        let render= 'index'
-        if (!id)  titulo='Productos disponibles' 
-        else {titulo='Producto elegido'; render= 'producto'}
+        if (!id) titulo = 'Productos disponibles'
+        else { titulo = 'Producto elegido' }
         try {
-            let products;
-           let prod = await productos.verProductos(id);
-           if (prod.length<2) products=prod[0]
-           else products=prod
-           await ctx.render(`${render}`,{products,titulo})
+            let products = await productos.verProductos(id);
+            await ctx.render('index', { products, titulo })
 
         } catch (error) {
             console.log(error)
@@ -27,16 +23,16 @@ export class ProductosControlador {
         const body = ctx.request.body
         console.log(body)
         try {
-            const newProduct = await productos.guardarProductos(body)
-          await ctx.redirect('/api/productos')
+            await productos.guardarProductos(body)
+            await ctx.redirect('/api/productos')
         } catch (error) {
             console.log(error)
         }
     }
 
     async eliminarProductos(ctx) {
-        try{
-        const id = ctx.request.params.id
+        try {
+            const id = ctx.request.params.id
             const eliminado = await productos.eliminarProducto(id)
             ctx.body=eliminado
         } catch (error) {
@@ -44,12 +40,12 @@ export class ProductosControlador {
         }
     }
 
-    async modificarProducto(ctx){
-        const body=ctx.request.body
+    async modificarProducto(ctx) {
+        const body = ctx.request.body
         const id = ctx.request.params.id
         try {
-          const productoModificado= await productos.modificarProducto(id,body)
-          await ctx.redirect('/')
+            const productoModificado = await productos.modificarProducto(id, body)
+            ctx.body=productoModificado
         } catch (error) {
             console.log(error)
         }

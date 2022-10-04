@@ -1,8 +1,10 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
     <title>Document</title>
   </head>
   <body>
@@ -17,13 +19,24 @@
       <input type="text" name="imagen" />
       <input type="submit" value="Guardar Producto" />
     </form>
-    <div>
+    <div class="productos__todos--order">
       {{#each products}}
-        <div><img src="{{this.imagen}}" alt="{{this.nombre}}" />
+        <div class="card__producto--style"><img
+            src="{{this.imagen}}"
+            alt="{{this.nombre}}"
+            class="imagen__producto--size"
+          />
           <h5>{{this.nombre}}</h5>
-          <strong>{{this.precio}}</strong>
+          <strong>${{this.precio}}</strong>
+          <form action="/api/productos/{{this.id}}" method="get">
+            <input type="submit" value="ver" />
+            <input type="button" value="ver todos" id="verTodos">
+          </form>
         </div>
       {{/each}}
     </div>
+    <script>document.getElementById('verTodos').addEventListener('click', () => {
+    window.location.assign('/api/productos')
+})</script>
   </body>
 </html>

@@ -3,22 +3,24 @@ import koaBody from 'koa-body'
 import { routerProductos } from './productos/routes/rutas_productos.js'
 import renderer from 'koa-hbs-renderer'
 import Handlebars from 'handlebars'
-
+import serve from 'koa-static'
 const app = new koa()
 
 app.use(koaBody())
 
+app.use(serve('public'))
+
 const options = {
-    extension:     '.hbs',
-    hbs:           Handlebars.create(),
+    extension: '.hbs',
+    hbs: Handlebars.create(),
     paths: {
-        views:'./public/views_hbs/'
+        views:'public/views_hbs/'
     },
-    Promise:      Promise
+    Promise: Promise
 };
 
 
-app.use(renderer(options)) 
+app.use(renderer(options))
 
 
 app.use(routerProductos.routes())
